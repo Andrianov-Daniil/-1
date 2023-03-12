@@ -1,7 +1,6 @@
 var map;
 var divSquare = '<div id="s$coord" class="square $color"></div>';
 var divFigure = '<div id="f$coord" class="figure">$figure</div>';
-var MOVE = '<audio src="movement_01.mp3" autoplay></audio>';
 var whose_move; //ход белых == true; ход чёрных == false
 //9678 - белая дамка  9673 - чёрная дамка
 
@@ -20,7 +19,6 @@ function start(){
 }
 
 function addSquares(){
-    console.log('addSquares');
     $('.board').html('');
     for(var coord = 0; coord < 64; coord++){
         $('.board').append(divSquare
@@ -73,6 +71,14 @@ function setDroppable(){
             moveFigure(fromCoord, toCoord);
         }
     });
+    $('body').droppable({
+        drop: function(event, ui){
+            var fromCoord = ui.draggable.attr('id').substring(1);
+            console.log(fromCoord);
+            showFigure(fromCoord, map[fromCoord]);
+            PlayMusic();
+        }
+    });
 }
 
 function moveFigure(fromCoord, toCoord){
@@ -83,7 +89,6 @@ function moveFigure(fromCoord, toCoord){
             figure = map[fromCoord];
             showFigure(fromCoord, '1');
             showFigure(toCoord, figure);
-            setDraggable();
             //проверка на дамку
             if (toCoord < 8){
                 showFigure(toCoord, 'W');
@@ -99,7 +104,6 @@ function moveFigure(fromCoord, toCoord){
             showFigure(toCoord, figure);
             showFigure(fromCoord-9, '1');
             showFigure(fromCoord, '1');
-            setDraggable();
             if (toCoord < 8){
                 showFigure(toCoord, 'W');
             }
@@ -115,7 +119,6 @@ function moveFigure(fromCoord, toCoord){
             showFigure(toCoord, figure);
             showFigure(fromCoord-7, '1');
             showFigure(fromCoord, '1');
-            setDraggable();
             if (toCoord < 8){
                 showFigure(toCoord, 'W');
             }
@@ -143,7 +146,6 @@ function moveFigure(fromCoord, toCoord){
                         if((map[to_coord] == 'w') || (map[to_coord] == 'W')){
                             showFigure(fromCoord, map[fromCoord]);
                             showFigure(toCoord, map[toCoord]);
-                            setDraggable();
                             return;
                         }
                     }
@@ -159,7 +161,6 @@ function moveFigure(fromCoord, toCoord){
                         if((map[to_coord] == 'w') || (map[to_coord] == 'W')){
                             showFigure(fromCoord, map[fromCoord]);
                             showFigure(toCoord, map[toCoord]);
-                            setDraggable();
                             return;
                         }
                     }
@@ -181,7 +182,6 @@ function moveFigure(fromCoord, toCoord){
                         if((map[to_coord] == 'w') || (map[to_coord] == 'W')){
                             showFigure(fromCoord, map[fromCoord]);
                             showFigure(toCoord, map[toCoord]);
-                            setDraggable();
                             return;
                         }
                     }
@@ -197,7 +197,6 @@ function moveFigure(fromCoord, toCoord){
                         if((map[to_coord] == 'w') || (map[to_coord] == 'W')){
                             showFigure(fromCoord, map[fromCoord]);
                             showFigure(toCoord, map[toCoord]);
-                            setDraggable();
                             return;
                         }
                     }
@@ -206,17 +205,14 @@ function moveFigure(fromCoord, toCoord){
             else{
                 showFigure(fromCoord, map[fromCoord]);
                 showFigure(toCoord, map[toCoord]);
-                setDraggable();
             }
             if(first_black > 1){
                 showFigure(fromCoord, map[fromCoord]);
                 showFigure(toCoord, map[toCoord]);
-                setDraggable();
             }
             else if(first_black == 0 && (!whitesCanCutDown())){
                 showFigure(toCoord, map[fromCoord]);
                 showFigure(fromCoord, '1');
-                setDraggable();
                 whose_move = false;
                 document.getElementsByClassName('whose_move')[0].textContent = "Ход чёрных";
                 document.getElementsByClassName('whose_move')[0].style.color = "black";
@@ -225,7 +221,6 @@ function moveFigure(fromCoord, toCoord){
                 showFigure(toCoord, map[fromCoord]);
                 showFigure(coord_first_black, '1');
                 showFigure(fromCoord, '1');
-                setDraggable();
                 if(!figureCanCutDown(toCoord)){
                     whose_move = false;
                     document.getElementsByClassName('whose_move')[0].textContent = "Ход чёрных";
@@ -235,13 +230,11 @@ function moveFigure(fromCoord, toCoord){
             else{
                 showFigure(fromCoord, map[fromCoord]);
                 showFigure(toCoord, map[toCoord]);
-                setDraggable();
             }
         }
         else{
             showFigure(fromCoord, map[fromCoord]);
             showFigure(toCoord, map[toCoord]);
-            setDraggable();
         }
     }
     else{
@@ -251,7 +244,6 @@ function moveFigure(fromCoord, toCoord){
             figure = map[fromCoord];
             showFigure(fromCoord, '1');
             showFigure(toCoord, figure);
-            setDraggable();
             //проверка на дамку
             if (toCoord > 55){
                 showFigure(toCoord, 'B');
@@ -267,7 +259,6 @@ function moveFigure(fromCoord, toCoord){
             showFigure(toCoord, figure);
             showFigure(toCoord-9, '1');
             showFigure(fromCoord, '1');
-            setDraggable();
             if (toCoord > 55){
                 showFigure(toCoord, 'B');
             }
@@ -284,7 +275,6 @@ function moveFigure(fromCoord, toCoord){
             showFigure(toCoord, figure);
             showFigure(toCoord-7, '1');
             showFigure(fromCoord, '1');
-            setDraggable();
             if (toCoord > 55){
                 showFigure(toCoord, 'B');
             }
@@ -352,17 +342,14 @@ function moveFigure(fromCoord, toCoord){
             else{
                 showFigure(fromCoord, map[fromCoord]);
                 showFigure(toCoord, map[toCoord]);
-                setDraggable();
             }
             if(first_white > 1){
                 showFigure(fromCoord, map[fromCoord]);
                 showFigure(toCoord, map[toCoord]);
-                setDraggable();
             }
             else if(first_white == 0 && (!blacksCanCutDown())){
                 showFigure(toCoord, map[fromCoord]);
                 showFigure(fromCoord, '1');
-                setDraggable();
                 whose_move = true;
                 document.getElementsByClassName('whose_move')[0].textContent = "Ход белых";
                 document.getElementsByClassName('whose_move')[0].style.color = "white";
@@ -381,16 +368,14 @@ function moveFigure(fromCoord, toCoord){
             else{
                 showFigure(fromCoord, map[fromCoord]);
                 showFigure(toCoord, map[toCoord]);
-                setDraggable();
             }
         }
         else{
             showFigure(fromCoord, map[fromCoord]);
             showFigure(toCoord, map[toCoord]);
-            setDraggable();
         }
     }
-    PlayMusick();
+    PlayMusic();
     maybeVin();
 }
 
@@ -659,7 +644,7 @@ function maybeVin(){
     }
 }
 
-function PlayMusick(){
+function PlayMusic(){
     let audio = new Audio("movement_01.mp3");
     audio.play();
 }
