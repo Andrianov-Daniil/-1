@@ -12,7 +12,7 @@ function start(){
     console.log('Hi, users! :)');
     map = new Array(64);
     addSquares();
-    ShowAllFigures('1b1b1b1Wb111b11111111111b111w1b1111b1111w11111w11w11111ww1w1w1w1');
+    ShowAllFigures('1b1b1b1bb1b1b1b11b1b1b1b1111111111111111w1w1w1w11w1w1w1ww1w1w1w1');
     //'1b1b1b1bb1b1b1b11b1b1b1b1111111111111111w1w1w1w11w1w1w1ww1w1w1w1'
     //'1b1b1b1Wb111b11111111111b111w1b1111b1111w11111w11w11111ww1w1w1w1'
     whose_move = true;
@@ -390,10 +390,9 @@ function moveFigure(fromCoord, toCoord){
         }
     }
     maybeVin();
-    whitesCanCutDown();
 }
 
-function figureCanCutDown(i){//фигура и её координата
+function figureCanCutDown(i){
     if (map[i] == 'w'){
         if (((map[i-7] == 'b') || (map[i-7] == 'B')) && ((map[i-14] == '1') && (isBlackSquare(i-14)))){
             return true;
@@ -403,30 +402,48 @@ function figureCanCutDown(i){//фигура и её координата
         }
     }
     else if (map[i] == 'W'){
-        var a = 7;
         //движение по /
-        while ((i-a) > 0 || (i+a) < 64){
-            if ((map[i-a] == 'w') || (map[i-a] == 'W') || (map[i+a] == 'w') || (map[i+a] == 'W')){
+        //вверх
+        var a = 7;
+        while ((i-a) > 0){
+            if ((map[i-a] == 'w') || (map[i-a] == 'W')){
                 break;
             }
             if (((map[i-a] == 'b') || (map[i-a] == 'B')) && ((map[i-a-7] == '1') && (isBlackSquare(i-a-7)))){
                 return true;
             }
-            if (((map[i+a] == 'b') || (map[i+a] == 'B')) && ((map[i+a+7] == '1') && (isBlackSquare(i+a+7)))){
+            a += 7;
+        }
+        //вниз
+        a = 7;
+        while (i-(-a) < 64){
+            if ((map[i-(-a)] == 'w') || (map[i-(-a)] == 'W')){
+                break;
+            }
+            if (((map[i-(-a)] == 'b') || (map[i-(-a)] == 'B')) && ((map[i-(-a-7)] == '1') && (isBlackSquare(i-(-a-7))))){
                 return true;
             }
             a += 7;
         }
         //движение по \
+        //вверх
         a = 9;
-        while ((i-a) > 0 || (i+a) < 64){
-            if ((map[i-a] == 'w') || (map[i-a] == 'W') || (map[i+a] == 'w') || (map[i+a] == 'W')){
+        while ((i-a) > 0){
+            if ((map[i-a] == 'w') || (map[i-a] == 'W')){
                 break;
             }
             if (((map[i-a] == 'b') || (map[i-a] == 'B')) && ((map[i-a-9] == '1') && (isBlackSquare(i-a-9)))){
                 return true;
             }
-            if (((map[i+a] == 'b') || (map[i+a] == 'B')) && ((map[i+a+9] == '1') && (isBlackSquare(i+a+9)))){
+            a += 9;
+        }
+        //вниз
+        a = 9;
+        while ((i-(-a)) < 64){
+            if ((map[i-(-a)] == 'w') || (map[i-(-a)] == 'W')){
+                break;
+            }
+            if (((map[i-(-a)] == 'b') || (map[i-(-a)] == 'B')) && ((map[i-(-a-9)] == '1') && (isBlackSquare(i-(-a-9))))){
                 return true;
             }
             a += 9;
@@ -441,30 +458,48 @@ function figureCanCutDown(i){//фигура и её координата
         }
     }
     else if (map[i] == 'B'){
-        var a = 7;
         //движение по /
-        while ((i-a) > 0 || (i+a) < 64){
-            if ((map[i-a] == 'b') || (map[i-a] == 'B') || (map[i+a] == 'b') || (map[i+a] == 'B')){
+        //вверх
+        var a = 7;
+        while ((i-a) > 0){
+            if ((map[i-a] == 'b') || (map[i-a] == 'B')){
                 break;
             }
             if (((map[i-a] == 'w') || (map[i-a] == 'W')) && ((map[i-a-7] == '1') && (isBlackSquare(i-a-7)))){
                 return true;
             }
-            if (((map[i+a] == 'w') || (map[i+a] == 'W')) && ((map[i+a+7] == '1') && (isBlackSquare(i+a+7)))){
+            a += 7;
+        }
+        //вниз
+        a = 7;
+        while ((i-(-a)) < 64){
+            if ((map[i-(-a)] == 'b') || (map[i-(-a)] == 'B')){
+                break;
+            }
+            if (((map[i-(-a)] == 'w') || (map[i-(-a)] == 'W')) && ((map[i-(-a-7)] == '1') && (isBlackSquare(i-(-a-7))))){
                 return true;
             }
             a += 7;
         }
         //движение по \
+        //вверх
         a = 9;
-        while ((i-a) > 0 || (i+a) < 64){
-            if ((map[i-a] == 'b') || (map[i-a] == 'B') || (map[i+a] == 'b') || (map[i+a] == 'B')){
+        while ((i-a) > 0){
+            if ((map[i-a] == 'b') || (map[i-a] == 'B')){
                 break;
             }
             if (((map[i-a] == 'w') || (map[i-a] == 'W')) && ((map[i-a-9] == '1') && (isBlackSquare(i-a-9)))){
                 return true;
             }
-            if (((map[i+a] == 'w') || (map[i+a] == 'W')) && ((map[i+a+9] == '1') && (isBlackSquare(i+a+9)))){
+            a += 9;
+        }
+        //вниз
+        a = 9;
+        while ((i-(-a)) < 64){
+            if ((map[i-(-a)] == 'b') || (map[i-(-a)] == 'B')){
+                break;
+            }
+            if (((map[i-(-a)] == 'w') || (map[i-(-a)] == 'W')) && ((map[i-(-a-9)] == '1') && (isBlackSquare(i-(-a-9))))){
                 return true;
             }
             a += 9;
@@ -473,7 +508,6 @@ function figureCanCutDown(i){//фигура и её координата
     return false;
 }
 
-//для дамок нужно прописать проверку сначала только вниз, потом только вверх
 function whitesCanCutDown(){
     for (var i = 0; i < 64; i++) {
         if (map[i] == 'w'){
@@ -485,30 +519,48 @@ function whitesCanCutDown(){
             }
         }
         else if (map[i] == 'W'){
-            var a = 7;
             //движение по /
-            while ((i-a) > 0 || (i+a) < 64){
-                if ((map[i-a] == 'w') || (map[i-a] == 'W') || (map[i+a] == 'w') || (map[i+a] == 'W')){
+            //вверх
+            var a = 7;
+            while ((i-a) > 0){
+                if ((map[i-a] == 'w') || (map[i-a] == 'W')){
                     break;
                 }
                 if (((map[i-a] == 'b') || (map[i-a] == 'B')) && ((map[i-a-7] == '1') && (isBlackSquare(i-a-7)))){
                     return true;
                 }
-                if (((map[i+a] == 'b') || (map[i+a] == 'B')) && ((map[i+a+7] == '1') && (isBlackSquare(i+a+7)))){
+                a += 7;
+            }
+            //вниз
+            a = 7;
+            while (i-(-a) < 64){
+                if ((map[i-(-a)] == 'w') || (map[i-(-a)] == 'W')){
+                    break;
+                }
+                if (((map[i-(-a)] == 'b') || (map[i-(-a)] == 'B')) && ((map[i-(-a-7)] == '1') && (isBlackSquare(i-(-a-7))))){
                     return true;
                 }
                 a += 7;
             }
             //движение по \
+            //вверх
             a = 9;
-            while ((i-a) > 0 || (i+a) < 64){
-                if ((map[i-a] == 'w') || (map[i-a] == 'W') || (map[i+a] == 'w') || (map[i+a] == 'W')){
+            while ((i-a) > 0){
+                if ((map[i-a] == 'w') || (map[i-a] == 'W')){
                     break;
                 }
                 if (((map[i-a] == 'b') || (map[i-a] == 'B')) && ((map[i-a-9] == '1') && (isBlackSquare(i-a-9)))){
                     return true;
                 }
-                if (((map[i+a] == 'b') || (map[i+a] == 'B')) && ((map[i+a+9] == '1') && (isBlackSquare(i+a+9)))){
+                a += 9;
+            }
+            //вниз
+            a = 9;
+            while ((i-(-a)) < 64){
+                if ((map[i-(-a)] == 'w') || (map[i-(-a)] == 'W')){
+                    break;
+                }
+                if (((map[i-(-a)] == 'b') || (map[i-(-a)] == 'B')) && ((map[i-(-a-9)] == '1') && (isBlackSquare(i-(-a-9))))){
                     return true;
                 }
                 a += 9;
@@ -529,30 +581,48 @@ function blacksCanCutDown(){
             }
         }
         else if (map[i] == 'B'){
-            var a = 7;
             //движение по /
-            while ((i-a) > 0 || (i+a) < 64){
-                if ((map[i-a] == 'b') || (map[i-a] == 'B') || (map[i+a] == 'b') || (map[i+a] == 'B')){
+            //вверх
+            var a = 7;
+            while ((i-a) > 0){
+                if ((map[i-a] == 'b') || (map[i-a] == 'B')){
                     break;
                 }
                 if (((map[i-a] == 'w') || (map[i-a] == 'W')) && ((map[i-a-7] == '1') && (isBlackSquare(i-a-7)))){
                     return true;
                 }
-                if (((map[i+a] == 'w') || (map[i+a] == 'W')) && ((map[i+a+7] == '1') && (isBlackSquare(i+a+7)))){
+                a += 7;
+            }
+            //вниз
+            a = 7;
+            while ((i-(-a)) < 64){
+                if ((map[i-(-a)] == 'b') || (map[i-(-a)] == 'B')){
+                    break;
+                }
+                if (((map[i-(-a)] == 'w') || (map[i-(-a)] == 'W')) && ((map[i-(-a-7)] == '1') && (isBlackSquare(i-(-a-7))))){
                     return true;
                 }
                 a += 7;
             }
             //движение по \
+            //вверх
             a = 9;
-            while ((i-a) > 0 || (i+a) < 64){
-                if ((map[i-a] == 'b') || (map[i-a] == 'B') || (map[i+a] == 'b') || (map[i+a] == 'B')){
+            while ((i-a) > 0){
+                if ((map[i-a] == 'b') || (map[i-a] == 'B')){
                     break;
                 }
                 if (((map[i-a] == 'w') || (map[i-a] == 'W')) && ((map[i-a-9] == '1') && (isBlackSquare(i-a-9)))){
                     return true;
                 }
-                if (((map[i+a] == 'w') || (map[i+a] == 'W')) && ((map[i+a+9] == '1') && (isBlackSquare(i+a+9)))){
+                a += 9;
+            }
+            //вниз
+            a = 9;
+            while ((i-(-a)) < 64){
+                if ((map[i-(-a)] == 'b') || (map[i-(-a)] == 'B')){
+                    break;
+                }
+                if (((map[i-(-a)] == 'w') || (map[i-(-a)] == 'W')) && ((map[i-(-a-9)] == '1') && (isBlackSquare(i-(-a-9))))){
                     return true;
                 }
                 a += 9;
