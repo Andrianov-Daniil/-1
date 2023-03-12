@@ -1,0 +1,56 @@
+*{
+    margin: auto;
+}
+
+H1 { 
+    font-size: 3rem;
+    text-align: center; 
+    padding-bottom: 30px;
+    padding-top: 10px;
+}
+
+H2 { 
+    color: aliceblue;
+    font-size: 5rem;
+    text-align: center; 
+    padding-bottom: 30px;
+    padding-top: 10px;
+}
+
+body {
+    background: url(https://phonoteka.org/uploads/posts/2021-04/1618478776_4-p-stol-fon-sverkhu-4.jpg);
+}
+
+.whose_move{
+    text-align: center; 
+    padding-bottom: 30px;
+    padding-top: 10px;
+}
+
+.board{
+    width: 768px;
+    height: 768px;
+    border: 7px solid black;
+}
+
+.square{
+    float: left;
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.white{
+    background-color: wheat;
+}
+
+.black{
+    background-color: sienna;
+}
+
+.figure{
+    font-size: 68px;
+    cursor: pointer;
+}
