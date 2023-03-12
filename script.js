@@ -1,6 +1,7 @@
 var map;
 var divSquare = '<div id="s$coord" class="square $color"></div>';
 var divFigure = '<div id="f$coord" class="figure">$figure</div>';
+var MOVE = '<audio src="movement_01.mp3" autoplay></audio>';
 var whose_move; //ход белых == true; ход чёрных == false
 //9678 - белая дамка  9673 - чёрная дамка
 
@@ -389,6 +390,7 @@ function moveFigure(fromCoord, toCoord){
             setDraggable();
         }
     }
+    PlayMusick();
     maybeVin();
 }
 
@@ -655,4 +657,9 @@ function maybeVin(){
         document.getElementsByClassName('whose_move')[0].textContent = "БЕЛЫЕ ПОБЕДИЛИ!";
         document.getElementsByClassName('whose_move')[0].style.color = "red";
     }
+}
+
+function PlayMusick(){
+    let audio = new Audio("movement_01.mp3");
+    audio.play();
 }
