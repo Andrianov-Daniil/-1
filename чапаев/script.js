@@ -12,7 +12,7 @@ function start(){
     console.log('Hi, users! :)');
     map = new Array(64);
     addSquares();
-    ShowAllFigures('b11b111w11111111111111b11b11111111111111111111b11111111w111wwww');
+    ShowAllFigures('b11b111w11111111111111b11b11111111111111111111b111ww111w111wwww');
     //'bbbbbbbb111111111111111111111111111111111111111111111111wwwwwwww'
     //'1b1b1b1bb1b1b1b11b1b1b1b1111111111111111w1w1w1w11w1w1w1ww1w1w1w1'
     //'1b1b1b1Wb111b11111111111b111w1b1111b1111w11111w11w11111ww1w1w1w1'
@@ -255,73 +255,226 @@ function moveFigure(fromCoord, toCoord){
             if(x_1 > x_2){
                 //удар вверх
                 if(y_1 > y_2){
-                    if ((y_1 - y_2) >= 4){
-                        var i = Number(toCoord) + 8;
-                        var a = 1;
-                        var arr = [Number(toCoord), Number(toCoord) + 1,];
-                        if (x_2 != 0){
-                            arr.push(Number(toCoord) - 1);   
+                    var i = Number(toCoord) + 8;
+                    if(Math.abs(x_1 - x_2) >= 4){
+                        var a = 3;
+                    }
+                    else{
+                        var a = 2;
+                    }
+                    var arr = [Number(toCoord)];
+                    if (x_2 != 0){
+                        arr.push(Number(toCoord) - 1);   
+                    }
+                    if (x_2 != 7){
+                        arr.push(Number(toCoord) + 1);   
+                    }
+                    y_2 += 1;
+                    while(y_1 > y_2){
+                        if(map[i] != '1'){
+                            arr.push(i);
                         }
-                        y_2 += 1;
-                        while(y_1 > y_2){
+                        if(map[i + 8] != '1'){
+                            arr.push(i+8);
+                        }
+                        if( i % 8 == x_1){
+                            a=1;
+                        }
+                        for(var b = 1; b < a; b++){
+                            if(map[i + b] != '1'){
+                                arr.push(i+b);
+                            }
+                            if(map[i + 8 + b] != '1'){
+                                arr.push(i + 8 + b);
+                            }
+                        }
+                        i += 17;
+                        y_2 += 2;
+                        if(y_2 + 1 == y_1){
                             if(map[i] != '1'){
                                 arr.push(i);
-                            }
-                            if(map[i + 8] != '1'){
-                                arr.push(i+8);
                             }
                             for(var b = 1; b <= a; b++){
                                 if(map[i + b] != '1'){
                                     arr.push(i+b);
                                 }
-                                if(map[i + 8 + b] != '1'){
-                                    arr.push(i + 8 + b);
-                                }
                             }
-                            i += 17;
-                            a += 1;
-                            y_2 += 2;
-                            if(y_2 + 1 == y_1){
-                                if(map[i] != '1'){
-                                    arr.push(i);
-                                }
-                                for(var b = 1; b <= a; b++){
-                                    if(map[i + b] != '1'){
-                                        arr.push(i+b);
-                                    }
-                                }
-                                break;
-                            }
+                            break;
                         }
-                        var random = Math.round(Math.random() * arr.length);
-                        showFigure(arr[random], map[fromCoord]);
-                        showFigure(fromCoord, '1');
-                        end_of_turn();
-                        return;
                     }
-                    else{
-
-                    }
+                    var random = Math.floor(Math.random() * arr.length);
+                    showFigure(arr[random], map[fromCoord]);
+                    showFigure(fromCoord, '1');
+                    end_of_turn();
+                    return;
                 }
                 //удар вниз
                 if(y_1 < y_2){
-                    if ((y_2 - y_1) >= 4){
-                        
+                    var i = Number(toCoord) - 8;
+                    if(Math.abs(x_1 - x_2) >= 4){
+                        var a = 3;
                     }
                     else{
-
+                        var a = 2;
                     }
+                    var arr = [Number(toCoord)];
+                    if (x_2 != 0){
+                        arr.push(Number(toCoord) - 1);   
+                    }
+                    if (x_2 != 7){
+                        arr.push(Number(toCoord) + 1);   
+                    }
+                    y_2 -= 1;
+                    while(y_1 < y_2){
+                        if(map[i] != '1'){
+                            arr.push(i);
+                        }
+                        if(map[i - 8] != '1'){
+                            arr.push(i-8);
+                        }
+                        if( i % 8 == x_1){
+                            a=1;
+                        }
+                        for(var b = 1; b < a; b++){
+                            if(map[i + b] != '1'){
+                                arr.push(i+b);
+                            }
+                            if(map[i - 8 + b] != '1'){
+                                arr.push(i - 8 + b);
+                            }
+                        }
+                        i -= 15;
+                        y_2 -= 2;
+                        if(y_2 - 1 == y_1){
+                            if(map[i] != '1'){
+                                arr.push(i);
+                            }
+                            for(var b = 1; b <= a; b++){
+                                if(map[i + b] != '1'){
+                                    arr.push(i+b);
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    var random = Math.floor(Math.random() * arr.length);
+                    showFigure(arr[random], map[fromCoord]);
+                    showFigure(fromCoord, '1');
+                    end_of_turn();
+                    return;
                 }
             }
             //удар вправо
             if(x_1 < x_2){
                 //удар вверх
                 if(y_1 > y_2){
-                    console.log("hi");
+                    var i = Number(toCoord) + 8;
+                    if(Math.abs(x_1 - x_2) >= 4){
+                        var a = 3;
+                    }
+                    else{
+                        var a = 2;
+                    }
+                    var arr = [Number(toCoord)];
+                    if (x_2 != 0){
+                        arr.push(Number(toCoord) - 1);   
+                    }
+                    if (x_2 != 7){
+                        arr.push(Number(toCoord) + 1);   
+                    }
+                    y_2 += 1;
+                    while(y_1 > y_2){
+                        if(map[i] != '1'){
+                            arr.push(i);
+                        }
+                        if(map[i + 8] != '1'){
+                            arr.push(i+8);
+                        }
+                        if( i % 8 == x_1){
+                            a=1;
+                        }
+                        for(var b = 1; b < a; b++){
+                            if(map[i - b] != '1'){
+                                arr.push(i-b);
+                            }
+                            if(map[i + 8 - b] != '1'){
+                                arr.push(i + 8 - b);
+                            }
+                        }
+                        i += 17;
+                        y_2 += 2;
+                        if(y_2 + 1 == y_1){
+                            if(map[i] != '1'){
+                                arr.push(i);
+                            }
+                            for(var b = 1; b <= a; b++){
+                                if(map[i - b] != '1'){
+                                    arr.push(i-b);
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    var random = Math.floor(Math.random() * arr.length);
+                    showFigure(arr[random], map[fromCoord]);
+                    showFigure(fromCoord, '1');
+                    end_of_turn();
+                    return;
                 }
                 //удар вниз
                 if(y_1 < y_2){
-                    console.log("hi");
+                    var i = Number(toCoord) - 8;
+                    if(Math.abs(x_1 - x_2) >= 4){
+                        var a = 3;
+                    }
+                    else{
+                        var a = 2;
+                    }
+                    var arr = [Number(toCoord), Number(toCoord) + 1,];
+                    if (x_2 != 0){
+                        arr.push(Number(toCoord) - 1);   
+                    }
+                    if (x_2 != 7){
+                        arr.push(Number(toCoord) + 1);   
+                    }
+                    y_2 -= 1;
+                    while(y_1 < y_2){
+                        if(map[i] != '1'){
+                            arr.push(i);
+                        }
+                        if(map[i - 8] != '1'){
+                            arr.push(i-8);
+                        }
+                        if( i % 8 == x_1){
+                            a=1;
+                        }
+                        for(var b = 1; b < a; b++){
+                            if(map[i - b] != '1'){
+                                arr.push(i-b);
+                            }
+                            if(map[i - 8 - b] != '1'){
+                                arr.push(i - 8 - b);
+                            }
+                        }
+                        i -= 15;
+                        y_2 -= 2;
+                        if(y_2 - 1 == y_1){
+                            if(map[i] != '1'){
+                                arr.push(i);
+                            }
+                            for(var b = 1; b <= a; b++){
+                                if(map[i - b] != '1'){
+                                    arr.push(i-b);
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    var random = Math.floor(Math.random() * arr.length);
+                    showFigure(arr[random], map[fromCoord]);
+                    showFigure(fromCoord, '1');
+                    end_of_turn();
+                    return;
                 }
             }
         }
